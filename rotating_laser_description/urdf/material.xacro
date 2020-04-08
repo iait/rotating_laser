@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+<!-- Define algunos colores para ser usados en rviz y Gazebo -->
+<material name="grey">
+  <color rgba="0.42 0.42 0.42 1"/>
+</material>
+<xacro:property name="grey">
+  <ambient>0.38 0.38 0.38 1</ambient>
+  <diffuse>0.42 0.42 0.42 1</diffuse>
+  <specular>0.46 0.46 0.46 1</specular>
+</xacro:property>
+
+<material name="dark_grey">
+  <color rgba="0.22 0.22 0.22 1"/>
+</material>
+<xacro:property name="dark_grey">
+  <ambient>0.18 0.18 0.18 1</ambient>
+  <diffuse>0.22 0.22 0.22 1</diffuse>
+  <specular>0.26 0.26 0.26 1</specular>
+</xacro:property>
+
+<material name="black">
+  <color rgba="0.12 0.12 0.12 1"/>
+</material>
+<xacro:property name="black">
+  <ambient>0.08 0.08 0.08 1</ambient>
+  <diffuse>0.12 0.12 0.12 1</diffuse>
+  <specular>0.16 0.16 0.16 1</specular>
+</xacro:property>
+
+<material name="blue">
+  <color rgba="0.08 0.22 0.48 1"/>
+</material>
+<xacro:property name="blue">
+  <ambient>0.00 0.16 0.42 1</ambient>
+  <diffuse>0.04 0.20 0.46 1</diffuse>
+  <specular>0.08 0.24 0.50 1</specular>
+</xacro:property>
+
+<xacro:macro name="gmaterial" params="color">
+  <xacro:if value="${color == 'grey'}">
+    <xacro:insert_block name="grey"/>
+  </xacro:if>
+  <xacro:if value="${color == 'dark_grey'}">
+    <xacro:insert_block name="dark_grey"/>
+  </xacro:if>
+  <xacro:if value="${color == 'black'}">
+    <xacro:insert_block name="black"/>
+  </xacro:if>
+  <xacro:if value="${color == 'blue'}">
+    <xacro:insert_block name="blue"/>
+  </xacro:if>
+</xacro:macro>
+
+</robot>
