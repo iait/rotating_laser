@@ -37,6 +37,10 @@
   </collision>
 </link>
 <gazebo reference="base_link">
+  <kp value="1000000"/>
+  <kd value="1"/>
+  <mu1 value="10"/>
+  <mu2 value="10"/>
   <visual>
     <material>
       <xacro:gmaterial color="grey"/>
@@ -69,6 +73,10 @@
   </collision>
 </link>
 <gazebo reference="laser_link">
+  <kp value="1000000"/>
+  <kd value="1"/>
+  <mu1 value="10"/>
+  <mu2 value="10"/>
   <visual>
     <material>
       <xacro:gmaterial color="black"/>

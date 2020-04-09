@@ -6,7 +6,7 @@
   <arg name="world_name" value="$(find rotating_laser_gazebo)/worlds/default.world"/>
   <arg name="debug" value="false"/>
   <arg name="gui" value="true"/>
-  <arg name="paused" value="true"/>
+  <arg name="paused" value="false"/>
   <arg name="use_sim_time" value="true"/>
   <arg name="headless" value="false"/>
 </include>
@@ -18,10 +18,7 @@
 
 <!-- Run a python script to the send a service call to gazebo_ros to spawn a URDF robot -->
 <node name="urdf_spawner" pkg="gazebo_ros" type="spawn_model" respawn="false" output="screen"
-    args="-urdf -model rotating_laser -z 0.04 -param robot_description">
+    args="-urdf -model rotating_laser -z 0.07 -param robot_description">
 </node>
-
-<!-- ros_control vehicle launch file -->
-<include file="$(find rotating_laser_control)/launch/rotating_laser_control.launch"/>
 
 </launch>

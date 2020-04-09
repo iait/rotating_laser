@@ -8,5 +8,5 @@ rotating_laser:
   base_laser_joint_velocity_controller:
     type: effort_controllers/JointVelocityController
     joint: base_laser_joint
-    pid: {p: 10.0, i: 0.1, d: 0.1}
+    pid: {p: 0.001, i: 0.0, d: 0.0}
     
