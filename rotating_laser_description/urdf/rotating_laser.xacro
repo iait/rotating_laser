@@ -5,11 +5,39 @@
 <xacro:include filename="$(find rotating_laser_description)/urdf/macro.xacro"/>
 
 <gazebo>
-  <plugin filename="libgazebo_ros_control.so" name="gazebo_ros_control">
+  <plugin name="gazebo_ros_control" filename="libgazebo_ros_control.so">
     <robotNamespace>/rotating_laser</robotNamespace>
     <robotSimType>gazebo_ros_control/DefaultRobotHWSim</robotSimType>
     <legacyModeNS>true</legacyModeNS>
   </plugin>
+</gazebo>
+
+<gazebo reference="sensor_link">
+  <sensor type="ray" name="sensor">
+    <!-- rotado sobre x para que el rayo horizontal se convierta en vertical -->
+    <pose>0 0 0 0 0 0</pose> 
+    <visualize>true</visualize>
+    <update_rate>50</update_rate>
+    <ray>
+      <scan>
+        <horizontal>
+          <samples>200</samples>
+          <resolution>1</resolution>
+          <min_angle>-2.094395102</min_angle>
+          <max_angle>2.094395102</max_angle>
+        </horizontal>
+      </scan>
+      <range>
+        <min>0.1</min>
+        <max>10</max>
+        <resolution>1</resolution>
+      </range>
+    </ray>
+    <plugin name="gazebo_ros_head_hokuyo_controller" filename="libgazebo_ros_laser.so">
+      <topicName>/rotating_laser/laser/scan</topicName>
+      <frameName>sensor_link</frameName>
+    </plugin>
+  </sensor>
 </gazebo>
   
 <!-- Dummy -->
@@ -20,19 +48,19 @@
   <inertial>
     <origin rpy="0 0 0" xyz="0 0 0"/>
     <mass value="0.18"/>
-    <xacro:box_inertia mass="0.18" width="0.08" depth="0.08" height="0.14"/>
+    <xacro:box_inertia mass="0.18" width="0.06" depth="0.06" height="0.14"/>
   </inertial>
   <visual>
     <origin rpy="0 0 0" xyz="0 0 0"/>
     <geometry>
-      <box size="0.08 0.08 0.14"/>
+      <box size="0.06 0.06 0.14"/>
     </geometry>
     <material name="grey"/>
   </visual>
   <collision>
     <origin rpy="0 0 0" xyz="0 0 0"/>
     <geometry>
-      <box size="0.08 0.08 0.14"/>
+      <box size="0.06 0.06 0.14"/>
     </geometry>
   </collision>
 </link>
@@ -54,19 +82,19 @@
 
 <link name="laser_link">
 <inertial>
-    <origin rpy="0 0 0" xyz="0 0 0"/>
+    <origin rpy="0 0 0" xyz="0 0 0.0145"/>
     <mass value="0.27"/>
-    <xacro:box_inertia mass="0.27" width="0.058" depth="0.058" height="0.087"/>
+    <xacro:box_inertia mass="0.27" width="0.05" depth="0.05" height="0.07"/>
   </inertial>
   <visual>
-    <origin rpy="0 0 0" xyz="0 0 0"/>
+    <origin rpy="0 0 0" xyz="0 0 0.0145"/>
     <geometry>
       <mesh filename="package://rotating_laser_description/mesh/hokuyo.dae"/>
     </geometry>
     <material name="black"/>
   </visual>
   <collision>
-    <origin rpy="0 0 0" xyz="0 0 0"/>
+    <origin rpy="0 0 0" xyz="0 0 0.0145"/>
     <geometry>
       <box size="0.05 0.05 0.07"/>
     </geometry>
@@ -86,8 +114,9 @@
 <joint name="base_laser_joint" type="continuous">
   <parent link="base_link"/>
   <child link="laser_link"/>
-  <origin xyz="0 0 0.105" rpy="0 0 0"/>
-  <axis xyz="0 0 1"/>
+  <!-- <origin xyz="0 0 0.105" rpy="0 1.570796327 0"/> -->
+  <origin xyz="0 0 0.095" rpy="1.570796327 0 1.570796327"/>
+  <axis xyz="0 1 0"/>
 </joint>
 <transmission name="tran1">
   <type>transmission_interface/SimpleTransmission</type>
@@ -99,6 +128,13 @@
     <mechanicalReduction>1</mechanicalReduction>
   </actuator>
 </transmission>
+
+<link name="sensor_link"/>
+<joint name="laser_sensor_link_joint" type="fixed">
+  <parent link="laser_link"/>
+  <child link="sensor_link"/>
+  <origin xyz="0 0 0.035" rpy="0 0 0"/>
+</joint>
 
 </robot>
 
