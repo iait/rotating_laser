@@ -34,7 +34,7 @@
       </range>
     </ray>
     <plugin name="gazebo_ros_head_hokuyo_controller" filename="libgazebo_ros_laser.so">
-      <topicName>/rotating_laser/laser/scan</topicName>
+      <topicName>/rotating_laser/laser_scan</topicName>
       <frameName>sensor_link</frameName>
     </plugin>
   </sensor>
